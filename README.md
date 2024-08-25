@@ -8,4 +8,4 @@ MPPI (Model Predictive Path-Integral) Controller for a Swerve Drive Robot
 <img src="./media/eyecatch.png" width="500px" />
 
 <!-- demo movie -->
-[!['demo movie']('')]('https://youtu.be/oAXfLGzUtg8?feature=shared')
+https://github.com/user-attachments/assets/7d955990-c882-405e-81b2-67f74c91f009
