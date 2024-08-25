@@ -2,7 +2,7 @@
 MPPI (Model Predictive Path-Integral) Controller for a Swerve Drive Robot
 
 > [!NOTE]
-> An academic paper related to this project has been accepted accepted to IROS2024. The source code will be open here soon.
+> An academic paper related to this project has been accepted accepted to [IROS2024](http://www.iros2024-abudhabi.org/). The source code will be open here soon.
 
 <!-- eyecatch image -->
 <img src="./media/eyecatch.png" width="500px" />
