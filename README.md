@@ -1,6 +1,7 @@
 # mppi_swerve_drive_ros
-<div align="center">
 **MPPI (Model Predictive Path-Integral) Controller for a Swerve Drive Robot**
+
+<div align="center">
 
 [[Website]](https://mizuhoaoki.github.io/projects/iros2024)
 [[PDF]](https://mizuhoaoki.github.io/media/papers/IROS2024_paper_mizuhoaoki.pdf)
