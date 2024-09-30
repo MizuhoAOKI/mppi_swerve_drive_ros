@@ -3,6 +3,8 @@
 
 <div align="center">
 
+![image](https://github.com/user-attachments/assets/56d055e7-f3a4-4c89-940f-577b00e4f088)
+
 [[Website]](https://mizuhoaoki.github.io/projects/iros2024)
 [[PDF]](https://mizuhoaoki.github.io/media/papers/IROS2024_paper_mizuhoaoki.pdf)
 [[Arxiv]](https://arxiv.org/abs/2409.08648)
