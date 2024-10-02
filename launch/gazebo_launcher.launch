@@ -1,0 +1,11 @@
+<launch>
+    <!-- set gazebo world name -->
+    <arg name="gazebo_world_name" default="empty_garden" /> <!-- empty, empty_garden, cylinder_garden, maze -->
+
+    <!-- launch gazebo world -->
+    <include file="$(find world_make)/launch/launch_gazebo_world_with_fwids.launch">
+        <arg name="open_rviz" value="true" />
+        <arg name="gazebo_world_name" value="$(arg gazebo_world_name)" />
+    </include>
+
+</launch>
