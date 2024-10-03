@@ -24,16 +24,10 @@ This package subscribes /groundtruth_odom topic from the gazebo world and conver
 |groundtruth_topic| string | The topic name of the ground truth odometry data. |
 
 
-## Setup
-Build this package with the following command.
-```
-catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2"
-```
-
-
 # Usage
-Launch this node with the following command.
+To launch the node indivisually, run the following command.
 ```
 source devel/setup.bash
 roslaunch groundtruth_odom_publisher groundtruth_odom_publisher.launch
 ```
+

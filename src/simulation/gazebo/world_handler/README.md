@@ -31,22 +31,8 @@ This package makes gazebo world and spawn a 4WIDS vehicle.
 | /fwids/joint_state_controller/publish_rate | double | The rate [Hz] at which to publish the joint state. |
 
 
-## Dependencies
-Install the following packages.
-```
-sudo apt install ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control ros-noetic-joint-state-controller ros-noetic-joint-state-publisher ros-noetic-robot-state-publisher
-```
-
-
-## Setup
-Build this package with the following command.
-```
-catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2"
-```
-
-
 ## Usage
-Launch the gazebo world with the following command.
+To launch the gazebo world indivisually, run the following command.
 ```
 source devel/setup.bash
 roslaunch world_handler launch_gazebo_world_with_fwids.launch
@@ -64,3 +50,4 @@ joints in gazebo will follow the value without any delay.
 ```
 [ERROR] [xxxxx]: No p gain specified for pid. xxxxx
 ```
+

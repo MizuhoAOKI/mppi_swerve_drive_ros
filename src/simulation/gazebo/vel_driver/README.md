@@ -34,22 +34,8 @@ Gazebo will subscribe the 8DoF vehicle command message and apply it to the 4WIDS
 | tire_radius                 | double | tire radius of the target 4WIDS vehicle [m] |
 
 
-## Dependencies
-Install the following packages.
-```
-sudo apt install ros-noetic-geometry-msgs
-```
-
-
-## Setup
-Build this package with the following command.
-```
-catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2"
-```
-
-
 ## Usage
-Launch this node with the following command.
+To launch the node indivisually, run the following command.
 ```
 source devel/setup.bash
 roslaunch vel_driver vel_driver.launch

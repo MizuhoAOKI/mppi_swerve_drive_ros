@@ -22,5 +22,20 @@ https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
 > [!NOTE]
 > An academic paper related to this project has been accepted to [IROS2024](http://www.iros2024-abudhabi.org/). The source code will be open here soon.
 
-<!-- eyecatch image -->
-<!-- <img src="./media/eyecatch.png" width="500px" /> -->
+# Setup
+- [Setting up development environment on docker](docs/setup_env_on_docker.md)
+- [Setting up development environment on native](docs/setup_env_on_native.md)
+
+
+# Usage
+
+## [Case 1] Launch gazebo simulator only, operating the 4wids vehicle manually with a joypad.
+```bash
+cd /path/to/mppi_swerve_drive_ros
+source devel/setup.bash
+roslaunch launch/gazebo_launcher.launch
+```
+
+
+> [!NOTE]
+> COMING SOON...
