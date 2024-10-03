@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(world_make)
+project(world_handler)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -29,7 +29,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_node src/world_make_node.cpp src/world_make.cpp)
+add_executable(${PROJECT_NAME}_node src/world_handler_node.cpp src/world_handler.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above

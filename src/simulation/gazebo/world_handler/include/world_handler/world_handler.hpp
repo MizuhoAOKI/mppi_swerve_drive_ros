@@ -5,11 +5,11 @@
 
 namespace gazebo
 {
-    class WorldMake
+    class WorldHandler
     {
         public:
-            WorldMake();
-            ~WorldMake();
+            WorldHandler();
+            ~WorldHandler();
         private:
             ros::NodeHandle nh_;
             ros::NodeHandle private_nh_;

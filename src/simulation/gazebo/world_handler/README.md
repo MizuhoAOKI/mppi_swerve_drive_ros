@@ -1,5 +1,6 @@
-# world_make
+# world_handler
 This package makes gazebo world and spawn a 4WIDS vehicle.
+
 
 ## Subscribing Topics
 
@@ -48,10 +49,11 @@ catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2"
 Launch the gazebo world with the following command.
 ```
 source devel/setup.bash
-roslaunch world_make launch_gazebo_world_with_fwids.launch
+roslaunch world_handler launch_gazebo_world_with_fwids.launch
 ```
 
 Press Ctrl+C to shut down the gazebo world.
+
 
 ## Note
 You can ignore the following error message when you run the gazebo world.

@@ -1,24 +1,24 @@
-#include "world_make/world_make.hpp"
+#include "world_handler/world_handler.hpp"
 
 namespace gazebo
 {
 
 // constructor
-WorldMake::WorldMake()
+WorldHandler::WorldHandler()
     : nh_(""), private_nh_("~")
 {
     // register SIGINT handler
-    signal(SIGINT, WorldMake::sigintHandler);
+    signal(SIGINT, WorldHandler::sigintHandler);
 }
 
 // destructor
-WorldMake::~WorldMake()
+WorldHandler::~WorldHandler()
 {
     // No Contents
 }
 
 // add signal handler of Ctrl+C
-void WorldMake::sigintHandler(int sig)
+void WorldHandler::sigintHandler(int sig)
 {
     ROS_WARN("Ctrl+C is pressed. kill gazebo process.");
     int result_kill_gazebo = system("killall -9 gzserver gzclient&");
@@ -26,10 +26,10 @@ void WorldMake::sigintHandler(int sig)
 }
 
 // timer callback
-void WorldMake::timerCallback(const ros::TimerEvent& event)
+void WorldHandler::timerCallback(const ros::TimerEvent& event)
 {
     // Not using this timer callback now...
-    ROS_INFO("timer callback in world_make node.");
+    ROS_INFO("timer callback in world_handler node.");
 }
 
 } // namespace gazebo
