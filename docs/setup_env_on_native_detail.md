@@ -1,4 +1,4 @@
-# Setting up development environment on docker
+# Setting up development environment on native
 
 ## Prerequisites
 - [ubuntu 20.04](https://releases.ubuntu.com/focal/)
