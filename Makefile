@@ -1,19 +1,19 @@
 # Usage: make [command]
-
-SHELL := /bin/bash
-WORKSPACE := ~/mppi_swerve_drive_ros
-USER = $(shell whoami)
+SHELL:=/bin/bash
 
 .PHONY: build # to avoid error
 
 build:
-	catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2"
-
-gazebo:
-	source $(WORKSPACE)/devel/setup.bash && roslaunch launch/gazebo_launcher.launch
+	catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2" && source devel/setup.bash
 
 clean:
 	rm -r build devel logs .catkin_tools
+
+install_deps:
+	apt update && apt install -y \
+	psmisc \
+	libbullet-dev libsdl-image1.2-dev libsdl-dev ros-noetic-geometry2 ros-noetic-navigation ros-noetic-gmapping \
+	ros-noetic-teb-local-planner
 
 setup_docker:
 	docker build -t noetic_image:latest -f docker/Dockerfile . --no-cache
@@ -33,3 +33,26 @@ run_docker:
 	else \
 		$(MAKE) run_rocker; \
 	fi
+
+# record rosbag (all topics)
+record:
+	cd $(shell pwd)/rosbag; rosbag record -a
+
+# play rosbag
+## [shell 1] make play
+## [shell 2] rosbag play rosbag/xxx.bag
+play:
+	source devel/setup.bash && roslaunch launch/rosbag_play.launch workspace:=$(shell pwd)
+
+# gazebo_world.launch
+gazebo_world:
+	source devel/setup.bash && roslaunch launch/gazebo_world.launch
+
+# gmapping.launch
+gmapping:
+	source devel/setup.bash && roslaunch launch/gmapping.launch workspace:=$(shell pwd)
+
+# navigation.launch
+navigation:
+	source devel/setup.bash && roslaunch launch/navigation.launch workspace:=$(shell pwd)
+

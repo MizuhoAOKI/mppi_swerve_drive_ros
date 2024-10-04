@@ -10,7 +10,8 @@
 [[Arxiv]](https://arxiv.org/abs/2409.08648)
 [[Poster]](https://mizuhoaoki.github.io/projects/iros2024_poster.pdf)
 
-[![ros distro: noetic](https://img.shields.io/badge/ROS-noetic-red.svg)](https://wiki.ros.org/noetic)
+[![ROS Distro: Noetic](https://img.shields.io/badge/ROS-Noetic-red.svg)](https://wiki.ros.org/noetic)
+[![Docker](https://img.shields.io/badge/-Docker-EEE.svg?logo=docker&style=flat)](https://www.docker.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Conference: IROS](https://img.shields.io/badge/Publication-IROS2024-purple.svg)](https://iros2024-abudhabi.org/)
 
@@ -29,7 +30,16 @@ https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
 
 1. Prerequisites
     - [docker](https://docs.docker.com/engine/install/ubuntu/)
+        - For ubuntu users:
+            ```
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            sudo sh get-docker.sh
+            ```
     - [rocker](https://github.com/osrf/rocker)
+        - For ubuntu users:
+            ```
+            sudo apt-get install python3-rocker
+            ```
 
 1. Clone the project repository.
     ```
@@ -75,7 +85,8 @@ https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
 
 1. Install foundation packages.
     ```
-    sudo apt update && sudo apt install -y python3-catkin-tools psmisc python3-rosdep
+    cd <path to your workspace>/mppi_swerve_drive_ros
+    sudo make install_deps
     ```
 1. Initialize rosdep, update it, and install dependencies.
     ```
@@ -114,7 +125,7 @@ make clean
 ```bash
 cd <path to your workspace>/mppi_swerve_drive_ros
 source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
-roslaunch launch/gazebo_launcher.launch gazebo_world_name:=maze
+roslaunch launch/gazebo_world.launch gazebo_world_name:=maze
 ```
 
 <details>
@@ -129,7 +140,34 @@ roslaunch launch/gazebo_launcher.launch gazebo_world_name:=maze
 
 </details>
 
-### [Case 2] ...
-
 > [!NOTE]
-> planner and controller nodes are coming soon...
+> planner and controller nodes are under preparation. please wait for the update.
+
+<!--
+### [Case 2] Navigate a 4wids vehicle autonomously with MPPI controller.
+
+- Try MPPI-3D(a) (quick but dangerous)
+    ```bash
+    cd <path to your workspace>/mppi_swerve_drive_ros
+    source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
+    roslaunch launch/navigation.launch local_planner:=mppi_3d_a
+    ```
+- Try MPPI-3D(b) (relatively safe but too slow)
+    ```bash
+    cd <path to your workspace>/mppi_swerve_drive_ros
+    source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
+    roslaunch launch/navigation.launch local_planner:=mppi_3d_b
+    ```
+- Try MPPI-4D (safe but relatively slow)
+    ```bash
+    cd <path to your workspace>/mppi_swerve_drive_ros
+    source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
+    roslaunch launch/navigation.launch local_planner:=mppi_4d
+    ```
+- ✨Try MPPI-H✨ (good balance between quickness and safety, recommended)
+    ```bash
+    cd <path to your workspace>/mppi_swerve_drive_ros
+    source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
+    roslaunch launch/navigation.launch local_planner:=mppi_h
+    ```
+-->

@@ -1,12 +1,13 @@
 <launch>
     <!-- set gazebo world name -->
     <arg name="gazebo_world_name" default="maze" /> <!-- empty, empty_garden, cylinder_garden, maze -->
-    <arg name="use_joystick" default="true" />     <!-- Do you use joystick to operate the vehicle? -->
-    <arg name="use_vel_driver" default="true" />   <!-- Do you use velocity driver to operate the vehicle? -->
+    <arg name="use_joystick" default="true" />      <!-- Do you use joystick to operate the vehicle? -->
+    <arg name="use_vel_driver" default="true" />    <!-- Do you use velocity driver to operate the vehicle? -->
+    <arg name="open_rviz" default="true" />         <!-- Do you use rviz? -->
 
     <!-- launch gazebo world -->
     <include file="$(find world_handler)/launch/launch_gazebo_world_with_fwids.launch">
-        <arg name="open_rviz" value="true" />
+        <arg name="open_rviz" value="$(arg open_rviz)" />
         <arg name="gazebo_world_name" value="$(arg gazebo_world_name)" />
     </include>
 

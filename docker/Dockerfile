@@ -1,20 +1,22 @@
 # rich base image
 FROM osrf/ros:noetic-desktop-full
 
-# install foundation packages
-## python3-catkin-tools is for "catkin build" command
-## psmisc is for "killall" command
+# install catkin tools first
 RUN apt update && apt install -y \
-    python3-catkin-tools \
-    psmisc
+    python3-catkin-tools
 
 # copy project to container temporarily for installing dependencies
 COPY src /home/src
 RUN /bin/bash -c "source /opt/ros/noetic/setup.bash" \ 
 && rosdep update && rosdep install -y --from-paths /home/src --ignore-src --rosdistro noetic
 
-# remove /home/src after installing dependencies
+# install dependencies
+COPY Makefile /home/Makefile
+RUN cd /home && make install_deps
+
+# remove /home/src and /home/Makefile after installing dependencies
 RUN rm -rf /home/src
+RUN rm /home/Makefile
 
 # set entrypoint including process of sourcing ros environment
 COPY docker/ros_entrypoint.sh /

@@ -4,7 +4,6 @@ result
 rosbag
 !rosbag/.gitkeep
 *.mp4
-!data/map/.gitkeep
 
 # default 
 devel/

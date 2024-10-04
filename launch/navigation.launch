@@ -1,0 +1,84 @@
+<launch>
+
+  <!-- often changed arguments -->
+  <arg name="gazebo_world_name" default="maze" /> <!-- empty, empty_garden, cylinder_garden, maze -->
+  <arg name="joy_operation" default="true" />
+  <arg name="local_planner" default="base" /> <!-- base, teb, mppi_3d, mppi_4d, mppi_h -->
+
+  <!-- arguments -->
+  <arg name="workspace" default="$(env HOME)/mppi_swerve_drive_ros" />
+  <arg name="rvizconfig" default="$(arg workspace)/data/rviz/navigation.rviz" />
+  <arg name="open_rviz" default="true"/>
+  <rosparam param="/use_sim_time">true</rosparam> <!-- set use_sim_time true to syncronize time with gazebo -->
+  <arg name="scan_topic"     default="/laser_link/scan"/>
+  <arg name="cmd_vel_topic"  default="/cmd_vel"/>
+  <arg name="odom_topic"     default="/groundtruth_odom"/>
+  <arg name="set_base_frame" default="base_link"/>
+  <arg name="set_odom_frame" default="odom"/>
+  <arg name="set_map_frame"  default="map"/>
+  <arg name="initial_pose_x" default="0.0"/>
+  <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_yaw" default="0.0"/>
+  <rosparam param="/use_sim_time">true</rosparam> <!-- set use_sim_time true to syncronize time with gazebo -->
+
+  <!-- launch gazebo world -->
+  <include file="$(arg workspace)/launch/gazebo_world.launch">
+    <arg name="gazebo_world_name" value="$(arg gazebo_world_name)" />
+    <arg name="use_joystick" value="$(arg joy_operation)" />
+    <arg name="use_vel_driver" value="false" />
+    <arg name="open_rviz" value="false" />
+  </include>
+
+  <!-- move_base [base local planner] -->
+  <group if="$(eval local_planner=='base')">
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+          <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+          <rosparam file="$(arg workspace)/config/base_local_planner.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_common_global.yaml" command="load" ns="global_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_common_local.yaml" command="load" ns="local_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_local.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_global.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/move_base.yaml" command="load" />
+          <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+          <remap from="odom" to="$(arg odom_topic)"/>
+          <remap from="scan" to="$(arg scan_topic)"/>
+      </node>
+      <!-- launch vel_driver to operate 4WIDS vehicle with /cmd_vel-->
+      <include file="$(find vel_driver)/launch/vel_driver.launch" />
+  </group>
+
+  <!-- move_base [teb local planner] -->
+  <group if="$(eval local_planner=='teb')">
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+          <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+          <rosparam file="$(arg workspace)/config/teb_local_planner.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_common_global.yaml" command="load" ns="global_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_common_local.yaml" command="load" ns="local_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_local.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_global.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/move_base.yaml" command="load" />
+          <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+          <remap from="odom" to="$(arg odom_topic)"/>
+          <remap from="scan" to="$(arg scan_topic)"/>
+      </node>
+      <!-- launch vel_driver to operate 4WIDS vehicle with /cmd_vel-->
+      <include file="$(find vel_driver)/launch/vel_driver.launch" />
+  </group>
+
+  <!-- map server -->
+  <node pkg="map_server" type="map_server" name="map_server" args="$(arg workspace)/data/map/$(arg gazebo_world_name)/map.yaml" />
+
+  <!-- amcl -->
+  <node pkg="amcl" type="amcl" name="amcl">
+      <param name="initial_pose_x"            value="$(arg initial_pose_x)"/>
+      <param name="initial_pose_y"            value="$(arg initial_pose_y)"/>
+      <param name="initial_pose_a"            value="$(arg initial_pose_yaw)"/>
+      <remap from="scan"                      to="$(arg scan_topic)"/>
+      <rosparam file="$(arg workspace)/config/amcl.yaml" command="load" />
+  </node>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+  </group>
+</launch>

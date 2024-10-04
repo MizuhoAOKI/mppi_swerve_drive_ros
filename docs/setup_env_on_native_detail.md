@@ -12,7 +12,8 @@
     ```
 1. install foundation packages.
     ```
-    sudo apt update && sudo apt install -y python3-catkin-tools psmisc python3-rosdep
+    cd <path to your workspace>/mppi_swerve_drive_ros
+    sudo make install_deps
     ```
 1. initialize rosdep, update it, and install dependencies.
     ```
