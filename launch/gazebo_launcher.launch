@@ -1,6 +1,6 @@
 <launch>
     <!-- set gazebo world name -->
-    <arg name="gazebo_world_name" default="empty_garden" /> <!-- empty, empty_garden, cylinder_garden, maze -->
+    <arg name="gazebo_world_name" default="maze" /> <!-- empty, empty_garden, cylinder_garden, maze -->
     <arg name="use_joystick" default="true" />     <!-- Do you use joystick to operate the vehicle? -->
     <arg name="use_vel_driver" default="true" />   <!-- Do you use velocity driver to operate the vehicle? -->
 

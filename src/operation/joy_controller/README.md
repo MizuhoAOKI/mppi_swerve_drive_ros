@@ -19,6 +19,7 @@ This node receives the joypad input and publishes twist message to operate the v
 ## Node Parameters
 | Parameter name               | Type   | Description                                                  |
 | ---------------------------- | ------ | ------------------------------------------------------------ |
+| dev | string | The device name of the joystick. default: /dev/input/js0 |
 | joy_topic | string | The topic name of the joystick message. |
 | control_cmd_vel_topic | string | The topic name of the velocity command. |
 | joy_left_stick_x_idx | int | The index of the left stick x-axis. |

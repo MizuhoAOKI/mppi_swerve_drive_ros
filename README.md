@@ -116,12 +116,20 @@ cd <path to your workspace>/mppi_swerve_drive_ros
 source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
 roslaunch launch/gazebo_launcher.launch gazebo_world_name:=maze
 ```
+
+<details>
+<summary>NOTES</summary>
+
 - gazebo_world_name options:
     - `empty`
     - `empty_garden`
     - `cylinder_garden`
     - `maze`
+- default joystick path is `/dev/input/js0`. If you want to change the path, please edit `mppi_swerve_drive_ros/src/operation/joy_controller/config/joy.yaml`.
 
+</details>
+
+### [Case 2] ...
 
 > [!NOTE]
 > planner and controller nodes are coming soon...

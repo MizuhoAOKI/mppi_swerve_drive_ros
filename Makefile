@@ -26,7 +26,7 @@ run_rocker:
 
 run_docker:
 	@if [ "$(shell docker inspect --format='{{.State.Status}}' noetic_container)" = "running" ]; then \
-		$(MAKE) dexec; \
+		$(MAKE) exec_docker; \
 	elif [ "$(shell docker inspect --format='{{.State.Status}}' noetic_container)" = "exited" ]; then \
 		docker start noetic_container; \
 		$(MAKE) exec_docker; \
