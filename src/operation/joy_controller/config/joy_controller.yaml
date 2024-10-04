@@ -5,6 +5,8 @@ joy_topic: /joy
 control_cmd_vel_topic: /cmd_vel
 
 # joy button indices
+joy_top_left_button_idx: 4
+joy_top_right_button_idx: 5
 joy_left_stick_x_idx: 0
 joy_left_stick_y_idx: 1
 joy_right_stick_x_idx: 3

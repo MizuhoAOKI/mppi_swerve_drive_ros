@@ -10,6 +10,8 @@ JoyController::JoyController()
     // load parameters 
 
     //// joy stick axes
+    private_nh_.param<int>("joy_top_left_button_idx", joy_top_left_button_idx, 4);
+    private_nh_.param<int>("joy_top_right_button_idx", joy_top_right_button_idx, 5);
     private_nh_.param<int>("joy_left_stick_x_idx", joy_left_stick_x_idx, 0);
     private_nh_.param<int>("joy_left_stick_y_idx", joy_left_stick_y_idx, 1);
     private_nh_.param<int>("joy_right_stick_x_idx", joy_right_stick_x_idx, 3);
@@ -45,10 +47,19 @@ JoyController::~JoyController()
 void JoyController::joyCallback(const sensor_msgs::Joy::ConstPtr& msg)
 {
     // parse received joy message
-    float val_left_stick_x = -1.0f * msg->axes[joy_left_stick_x_idx];
-    float val_left_stick_y = msg->axes[joy_left_stick_y_idx];
-    float val_right_stick_x = msg->axes[joy_right_stick_x_idx];
-    float val_right_stick_y = msg->axes[joy_right_stick_y_idx];
+    float scale = 1.0f;
+    if (msg->buttons[joy_top_left_button_idx]) // scale down the command (0.5x)
+    {
+        scale = scale * 0.5f;
+    }
+    if (msg->buttons[joy_top_right_button_idx]) // scale up the command (2.0x)
+    {
+        scale = scale * 2.0f;
+    }
+    float val_left_stick_x  = scale * msg->axes[joy_left_stick_x_idx] * (-1.0f);
+    float val_left_stick_y  = scale * msg->axes[joy_left_stick_y_idx];
+    float val_right_stick_x = scale * msg->axes[joy_right_stick_x_idx];
+    float val_right_stick_y = scale * msg->axes[joy_right_stick_y_idx];
 
     // [for debug] annouce received joy message
     ROS_DEBUG("Received Joy Command: Lstick_x = %+5.1f, Lstick_y = %+5.1f, Rstick_x = %+5.1f, Rstick_y = %+5.1f", val_left_stick_x, val_left_stick_y, val_right_stick_x, val_right_stick_y);

@@ -20,6 +20,8 @@ namespace operation
             geometry_msgs::Twist cmd_vel_;
 
             // joy stick axes to be loaded from yaml file
+            int joy_top_left_button_idx;
+            int joy_top_right_button_idx;
             int joy_left_stick_x_idx;
             int joy_left_stick_y_idx;
             int joy_right_stick_x_idx;
