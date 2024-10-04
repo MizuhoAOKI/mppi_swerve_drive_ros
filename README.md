@@ -32,9 +32,14 @@ https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
 ## [Case 1] Launch gazebo simulator only, operating the 4wids vehicle manually with a joypad.
 ```bash
 cd <path to your workspace>/mppi_swerve_drive_ros
-source devel/setup.bash
-roslaunch launch/gazebo_launcher.launch
+source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
+roslaunch launch/gazebo_launcher.launch gazebo_world_name:=maze
 ```
+- gazebo_world_name options:
+    - `empty`
+    - `empty_garden`
+    - `cylinder_garden`
+    - `maze`
 
 
 > [!NOTE]
