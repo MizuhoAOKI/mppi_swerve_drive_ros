@@ -25,7 +25,7 @@ https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
 ### [Option 1] Docker environment
 
 <details>
-<summary>CICK HERE TO EXPAND</summary>
+<summary>CLICK HERE TO EXPAND</summary>
 
 1. Prerequisites
     - [docker](https://docs.docker.com/engine/install/ubuntu/)
@@ -61,7 +61,7 @@ https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
 ### [Option 2] Native environment
 
 <details>
-<summary>CICK HERE TO EXPAND</summary>
+<summary>CLICK HERE TO EXPAND</summary>
 
 1. Prerequisites
     - [ubuntu 20.04](https://releases.ubuntu.com/focal/)
