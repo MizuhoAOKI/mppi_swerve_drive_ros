@@ -131,7 +131,7 @@ roslaunch launch/gazebo_world.launch gazebo_world_name:=maze
 <details>
 <summary>NOTES</summary>
 
-- Gazebo_world_name options:
+- `gazebo_world_name` options:
     - `empty`
     - `empty_garden`
     - `cylinder_garden`

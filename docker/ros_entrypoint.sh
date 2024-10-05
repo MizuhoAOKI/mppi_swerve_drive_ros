@@ -8,5 +8,6 @@ fi
 ## add commands above to ~/.bashrc
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 echo "source ~/mppi_swerve_drive_ros/devel/setup.bash" >> ~/.bashrc
+echo "source /etc/bash_completion" >> ~/.bashrc
 ## run command
 exec "$@"
