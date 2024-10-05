@@ -29,6 +29,9 @@
     <arg name="open_rviz" value="false" />
   </include>
 
+  <!-- reference_costmap_generator -->
+  <include file="$(find reference_costmap_generator)/launch/reference_costmap_generator.launch" />
+
   <!-- move_base [base local planner] -->
   <group if="$(eval local_planner=='base')">
       <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">

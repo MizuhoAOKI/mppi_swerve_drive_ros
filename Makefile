@@ -9,11 +9,9 @@ build:
 clean:
 	rm -r build devel logs .catkin_tools
 
-install_deps:
+install_deps: # install packages which are not supported by rosdep
 	apt update && apt install -y \
-	psmisc \
-	libbullet-dev libsdl-image1.2-dev libsdl-dev ros-noetic-geometry2 ros-noetic-navigation ros-noetic-gmapping \
-	ros-noetic-teb-local-planner
+	psmisc
 
 setup_docker:
 	docker build -t noetic_image:latest -f docker/Dockerfile . --no-cache
