@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(reference_costmap_generator)
 
 # parameters
-option(USE_OPENMP "USE_OPENMP" OFF) # ON / OFF
+option(USE_OPENMP "USE_OPENMP" ON) # ON / OFF
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)

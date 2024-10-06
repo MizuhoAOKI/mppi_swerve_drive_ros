@@ -3,7 +3,7 @@
   <!-- often changed arguments -->
   <arg name="gazebo_world_name" default="maze" /> <!-- empty, empty_garden, cylinder_garden, maze -->
   <arg name="joy_operation" default="true" />
-  <arg name="local_planner" default="base" /> <!-- base, teb, mppi_3d, mppi_4d, mppi_h -->
+  <arg name="local_planner" default="mppi_h" /> <!-- base, teb, mppi_3d, mppi_4d, mppi_h -->
 
   <!-- arguments -->
   <arg name="workspace" default="$(env HOME)/mppi_swerve_drive_ros" />
@@ -29,8 +29,31 @@
     <arg name="open_rviz" value="false" />
   </include>
 
-  <!-- reference_costmap_generator -->
-  <include file="$(find reference_costmap_generator)/launch/reference_costmap_generator.launch" />
+  <!-- MPPI-H (switching MPPI-3D and MPPI-4D in real-time) -->
+  <!-- TODO: delete hybrid_mppi and add mppi_h package -->
+  <group if="$(eval local_planner=='mppi_h')">
+      <include file="$(find hybrid_mppi)/launch/hybrid_mppi.launch" />
+
+      <!-- reference_costmap_generator -->
+      <include file="$(find reference_costmap_generator)/launch/reference_costmap_generator.launch" />
+
+      <!-- launch global planner -->
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+          <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+          <rosparam file="$(arg workspace)/config/base_local_planner.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_common_global.yaml" command="load" ns="global_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_common_local.yaml" command="load" ns="local_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_local.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_global.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/move_base.yaml" command="load" />
+          <remap from="cmd_vel" to="/no_use/cmd_vel"/>
+          <remap from="odom" to="$(arg odom_topic)"/>
+          <remap from="scan" to="$(arg scan_topic)"/>
+      </node>
+
+      <!-- launch vel_driver to operate 4WIDS vehicle with /cmd_vel-->
+      <include file="$(find vel_driver)/launch/vel_driver.launch" />
+  </group>
 
   <!-- move_base [base local planner] -->
   <group if="$(eval local_planner=='base')">

@@ -1,9 +1,11 @@
 # Usage: make [command]
 SHELL:=/bin/bash
+WORKSPACE=$(shell pwd)
 
 .PHONY: build # to avoid error
 
 build:
+	export CC=clang-11 && export CXX=clang++-11 &&\
 	catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2" && source devel/setup.bash
 
 clean:
@@ -11,7 +13,7 @@ clean:
 
 install_deps: # install packages which are not supported by rosdep
 	apt update && apt install -y \
-	psmisc
+	psmisc clang-11
 
 setup_docker:
 	docker build -t noetic_image:latest -f docker/Dockerfile . --no-cache
@@ -32,25 +34,27 @@ run_docker:
 		$(MAKE) run_rocker; \
 	fi
 
+source:
+	source /opt/ros/noetic/setup.bash && source ${WORKSPACE}/devel/setup.bash
+
 # record rosbag (all topics)
 record:
-	cd $(shell pwd)/rosbag; rosbag record -a
+	cd ${WORKSPACE}/rosbag; rosbag record -a
 
 # play rosbag
 ## [shell 1] make play
 ## [shell 2] rosbag play rosbag/xxx.bag
 play:
-	source devel/setup.bash && roslaunch launch/rosbag_play.launch workspace:=$(shell pwd)
+	$(MAKE) source && roslaunch launch/rosbag_play.launch workspace:=${WORKSPACE}
 
 # gazebo_world.launch
 gazebo_world:
-	source devel/setup.bash && roslaunch launch/gazebo_world.launch
+	$(MAKE) source && roslaunch launch/gazebo_world.launch
 
 # gmapping.launch
 gmapping:
-	source devel/setup.bash && roslaunch launch/gmapping.launch workspace:=$(shell pwd)
+	$(MAKE) source && roslaunch launch/gmapping.launch workspace:=${WORKSPACE}
 
 # navigation.launch
 navigation:
-	source devel/setup.bash && roslaunch launch/navigation.launch workspace:=$(shell pwd)
-
+	$(MAKE) source && roslaunch launch/navigation.launch workspace:=${WORKSPACE}
