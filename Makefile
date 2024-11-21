@@ -5,8 +5,9 @@ WORKSPACE=$(shell pwd)
 .PHONY: build # to avoid error
 
 build:
+	source /opt/ros/noetic/setup.bash &&\
 	export CC=clang-11 && export CXX=clang++-11 &&\
-	catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2" && source devel/setup.bash
+	catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-O2"
 
 clean:
 	rm -r build devel logs .catkin_tools
@@ -39,9 +40,6 @@ run_docker:
 		$(MAKE) run_rocker; \
 	fi
 
-source:
-	source /opt/ros/noetic/setup.bash && source ${WORKSPACE}/devel/setup.bash
-
 # record rosbag (all topics)
 record:
 	cd ${WORKSPACE}/rosbag; rosbag record -a
@@ -50,16 +48,20 @@ record:
 ## [shell 1] make play
 ## [shell 2] rosbag play rosbag/xxx.bag
 play:
-	$(MAKE) source && roslaunch launch/rosbag_play.launch workspace:=${WORKSPACE}
+	source /opt/ros/noetic/setup.bash && source ./devel/setup.bash &&\
+	roslaunch launch/rosbag_play.launch workspace:=${WORKSPACE}
 
 # gazebo_world.launch
 gazebo_world:
-	$(MAKE) source && roslaunch launch/gazebo_world.launch
+	source /opt/ros/noetic/setup.bash && source ./devel/setup.bash &&\
+	roslaunch launch/gazebo_world.launch
 
 # gmapping.launch
 gmapping:
-	$(MAKE) source && roslaunch launch/gmapping.launch workspace:=${WORKSPACE}
+	source /opt/ros/noetic/setup.bash && source ./devel/setup.bash &&\
+	roslaunch launch/gmapping.launch workspace:=${WORKSPACE}
 
 # navigation.launch
 navigation:
-	$(MAKE) source && roslaunch launch/navigation.launch workspace:=${WORKSPACE}
+	source /opt/ros/noetic/setup.bash && source ./devel/setup.bash &&\
+	roslaunch launch/navigation.launch workspace:=${WORKSPACE}
