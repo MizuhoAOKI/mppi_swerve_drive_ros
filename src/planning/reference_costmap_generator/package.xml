@@ -50,23 +50,4 @@
   <exec_depend>tf2_geometry_msgs</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
 
-<!-- TODO: move to controller package later  -->
-<build_depend>bullet</build_depend>
-<build_depend>sdl</build_depend>
-<build_depend>sdl-image</build_depend>
-<build_depend>geometry2</build_depend>
-<build_depend>navigation</build_depend>
-<build_export_depend>bullet</build_export_depend>
-<build_export_depend>sdl</build_export_depend>
-<build_export_depend>sdl-image</build_export_depend>
-<build_export_depend>geometry2</build_export_depend>
-<build_export_depend>navigation</build_export_depend>
-<exec_depend>bullet</exec_depend>
-<exec_depend>sdl</exec_depend>
-<exec_depend>sdl-image</exec_depend>
-<exec_depend>geometry2</exec_depend>
-<exec_depend>navigation</exec_depend>
-<exec_depend>gmapping</exec_depend>
-<exec_depend>teb_local_planner</exec_depend>
-
 </package>

@@ -1,9 +1,11 @@
 <launch>
 
+  <!-- ##### SETTINGS { ##### -->
+
   <!-- often changed arguments -->
   <arg name="gazebo_world_name" default="maze" /> <!-- empty, empty_garden, cylinder_garden, maze -->
   <arg name="joy_operation" default="true" />
-  <arg name="local_planner" default="mppi_h" /> <!-- base, teb, mppi_3d, mppi_4d, mppi_h -->
+  <arg name="local_planner" default="mppi_3d_b" /> <!-- mppi_3d_a, mppi_3d_b --> <!-- TODO: mppi_4d, mppi_h will come soon. -->
 
   <!-- arguments -->
   <arg name="workspace" default="$(env HOME)/mppi_swerve_drive_ros" />
@@ -21,6 +23,11 @@
   <arg name="initial_pose_yaw" default="0.0"/>
   <rosparam param="/use_sim_time">true</rosparam> <!-- set use_sim_time true to syncronize time with gazebo -->
 
+  <!-- ##### } SETTINGS ##### -->
+
+
+  <!-- ##### COMMON NODES { ##### -->
+
   <!-- launch gazebo world -->
   <include file="$(arg workspace)/launch/gazebo_world.launch">
     <arg name="gazebo_world_name" value="$(arg gazebo_world_name)" />
@@ -29,10 +36,31 @@
     <arg name="open_rviz" value="false" />
   </include>
 
-  <!-- MPPI-H (switching MPPI-3D and MPPI-4D in real-time) -->
-  <!-- TODO: delete hybrid_mppi and add mppi_h package -->
-  <group if="$(eval local_planner=='mppi_h')">
-      <include file="$(find hybrid_mppi)/launch/hybrid_mppi.launch" />
+  <!-- map server -->
+  <node pkg="map_server" type="map_server" name="map_server" args="$(arg workspace)/data/map/$(arg gazebo_world_name)/map.yaml" />
+
+  <!-- amcl -->
+  <node pkg="amcl" type="amcl" name="amcl">
+      <param name="initial_pose_x"            value="$(arg initial_pose_x)"/>
+      <param name="initial_pose_y"            value="$(arg initial_pose_y)"/>
+      <param name="initial_pose_a"            value="$(arg initial_pose_yaw)"/>
+      <remap from="scan"                      to="$(arg scan_topic)"/>
+      <rosparam file="$(arg workspace)/config/amcl.yaml" command="load" />
+  </node>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+  </group>
+
+  <!-- ##### } COMMON NODES ##### -->
+
+
+  <!-- ##### LAUNCH SELECTED LOCAL PLANNER { ##### -->
+
+  <!-- MPPI-3D (a) (exploring 3 dimensional space: vx, vy, omega) -->
+  <group if="$(eval local_planner=='mppi_3d_a')">
+      <include file="$(find mppi_3d)/launch/mppi_3d_a.launch" />
 
       <!-- reference_costmap_generator -->
       <include file="$(find reference_costmap_generator)/launch/reference_costmap_generator.launch" />
@@ -55,7 +83,82 @@
       <include file="$(find vel_driver)/launch/vel_driver.launch" />
   </group>
 
-  <!-- move_base [base local planner] -->
+  <!-- MPPI-3D (b) (exploring 3 dimensional space: vx, vy, omega) -->
+  <group if="$(eval local_planner=='mppi_3d_b')">
+      <include file="$(find mppi_3d)/launch/mppi_3d_b.launch" />
+
+      <!-- reference_costmap_generator -->
+      <include file="$(find reference_costmap_generator)/launch/reference_costmap_generator.launch" />
+
+      <!-- launch global planner -->
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+          <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+          <rosparam file="$(arg workspace)/config/base_local_planner.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_common_global.yaml" command="load" ns="global_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_common_local.yaml" command="load" ns="local_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_local.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_global.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/move_base.yaml" command="load" />
+          <remap from="cmd_vel" to="/no_use/cmd_vel"/>
+          <remap from="odom" to="$(arg odom_topic)"/>
+          <remap from="scan" to="$(arg scan_topic)"/>
+      </node>
+
+      <!-- launch vel_driver to operate 4WIDS vehicle with /cmd_vel-->
+      <include file="$(find vel_driver)/launch/vel_driver.launch" />
+  </group>
+
+  <!-- MPPI-4D (b) (exploring 4 dimensional space) --> <!-- TODO: Coming Soon -->
+  <group if="$(eval local_planner=='mppi_4d')">
+      <include file="$(find mppi_3d)/launch/mppi_4d.launch" />
+
+      <!-- reference_costmap_generator -->
+      <include file="$(find reference_costmap_generator)/launch/reference_costmap_generator.launch" />
+
+      <!-- launch global planner -->
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+          <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+          <rosparam file="$(arg workspace)/config/base_local_planner.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_common_global.yaml" command="load" ns="global_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_common_local.yaml" command="load" ns="local_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_local.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_global.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/move_base.yaml" command="load" />
+          <remap from="cmd_vel" to="/no_use/cmd_vel"/>
+          <remap from="odom" to="$(arg odom_topic)"/>
+          <remap from="scan" to="$(arg scan_topic)"/>
+      </node>
+
+      <!-- launch vel_driver to operate 4WIDS vehicle with /cmd_vel-->
+      <include file="$(find vel_driver)/launch/vel_driver.launch" />
+  </group>
+
+  <!-- MPPI-H (switching MPPI-3D and MPPI-4D in real-time) --> <!-- TODO: Coming Soon -->
+  <group if="$(eval local_planner=='mppi_h')">
+      <include file="$(find hybrid_mppi)/launch/mppi_h.launch" />
+
+      <!-- reference_costmap_generator -->
+      <include file="$(find reference_costmap_generator)/launch/reference_costmap_generator.launch" />
+
+      <!-- launch global planner -->
+      <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+          <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+          <rosparam file="$(arg workspace)/config/base_local_planner.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_common_global.yaml" command="load" ns="global_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_common_local.yaml" command="load" ns="local_costmap" />
+          <rosparam file="$(arg workspace)/config/costmap_local.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/costmap_global.yaml" command="load" />
+          <rosparam file="$(arg workspace)/config/move_base.yaml" command="load" />
+          <remap from="cmd_vel" to="/no_use/cmd_vel"/>
+          <remap from="odom" to="$(arg odom_topic)"/>
+          <remap from="scan" to="$(arg scan_topic)"/>
+      </node>
+
+      <!-- launch vel_driver to operate 4WIDS vehicle with /cmd_vel-->
+      <include file="$(find vel_driver)/launch/vel_driver.launch" />
+  </group>
+
+  <!-- (not supported) move_base [base local planner] -->
   <group if="$(eval local_planner=='base')">
       <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
           <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
@@ -73,7 +176,7 @@
       <include file="$(find vel_driver)/launch/vel_driver.launch" />
   </group>
 
-  <!-- move_base [teb local planner] -->
+  <!-- (not supported) move_base [teb local planner] -->
   <group if="$(eval local_planner=='teb')">
       <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
           <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
@@ -91,20 +194,7 @@
       <include file="$(find vel_driver)/launch/vel_driver.launch" />
   </group>
 
-  <!-- map server -->
-  <node pkg="map_server" type="map_server" name="map_server" args="$(arg workspace)/data/map/$(arg gazebo_world_name)/map.yaml" />
+  <!-- ##### } LAUNCH SELECTED LOCAL PLANNER ##### -->
 
-  <!-- amcl -->
-  <node pkg="amcl" type="amcl" name="amcl">
-      <param name="initial_pose_x"            value="$(arg initial_pose_x)"/>
-      <param name="initial_pose_y"            value="$(arg initial_pose_y)"/>
-      <param name="initial_pose_a"            value="$(arg initial_pose_yaw)"/>
-      <remap from="scan"                      to="$(arg scan_topic)"/>
-      <rosparam file="$(arg workspace)/config/amcl.yaml" command="load" />
-  </node>
 
-  <!-- rviz -->
-  <group if="$(arg open_rviz)"> 
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
-  </group>
 </launch>

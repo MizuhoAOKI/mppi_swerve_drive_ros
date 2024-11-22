@@ -140,24 +140,25 @@ roslaunch launch/gazebo_world.launch gazebo_world_name:=maze
 
 </details>
 
-> [!NOTE]
-> planner and controller nodes are under preparation. please wait for the update.
+### [Case 2] Navigate a 4wids vehicle autonomously with a MPPI controller.
 
-<!--
-### [Case 2] Navigate a 4wids vehicle autonomously with MPPI controller.
-
-- Try MPPI-3D(a) (quick but dangerous)
+- Try MPPI-3D(a) (driving faster but dangerous sometimes)
     ```bash
     cd <path to your workspace>/mppi_swerve_drive_ros
     source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
     roslaunch launch/navigation.launch local_planner:=mppi_3d_a
     ```
-- Try MPPI-3D(b) (relatively safe but too slow)
+- Try MPPI-3D(b) (relatively safe but driving slower)
     ```bash
     cd <path to your workspace>/mppi_swerve_drive_ros
     source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
     roslaunch launch/navigation.launch local_planner:=mppi_3d_b
     ```
+
+> [!NOTE]
+> MPPI-4D and MPPI-H are under preparation. please wait for the update.
+
+<!--
 - Try MPPI-4D (safe but relatively slow)
     ```bash
     cd <path to your workspace>/mppi_swerve_drive_ros
