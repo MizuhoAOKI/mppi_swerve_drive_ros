@@ -73,9 +73,14 @@ common_type::VxVyOmega MPPICore::solveMPPI(
     )
     {
         // return zero velocity command
-        common_type::VxVyOmega stop_vxvyw_cmd; 
+        common_type::VxVyOmega stop_vxvyw_cmd;
         stop_vxvyw_cmd.setZero();
+        is_goal_reached_ = true;
         return stop_vxvyw_cmd;
+    }
+    else
+    {
+        is_goal_reached_ = false;
     }
 
     // initialization
@@ -165,13 +170,31 @@ common_type::VxVyOmega MPPICore::solveMPPI(
     calc_time_ = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
 
     // calculate and save optimal state trajectory
+    state_cost_ = 0.0;
     x_opt_seq_[0] = target_system::convertXYYawToStateSpace3D(observed_state);
     for (int t = 1; t < T; t++)
     {
         x_opt_seq_[t] = target_system::calcNextState(
             x_opt_seq_[t-1], u_opt_seq[t-1], param_.controller.step_len_sec
         );
+
+        // add stage cost
+        Control prev_control_input = (t == 1) ? u_opt_latest_ : u_opt_seq_latest_[t-2];
+        state_cost_ += controller::stage_cost(
+                x_opt_seq_[t],
+                u_opt_seq[t-1],
+                prev_control_input,
+                collision_costmap,
+                distance_error_map,
+                ref_yaw_map,
+                goal_state,
+                param_
+        );
+        state_cost_ += param_.controller.param_lambda * (1.0 - param_.controller.param_alpha) \
+            * u_opt_seq_latest_[t-1].eigen().transpose() * (sigma_[t-1].eigen().asDiagonal().inverse()) * u_opt_seq[t-1].eigen();
     }
+    // add terminal cost
+    state_cost_ += controller::terminal_cost(x_opt_seq_[T-1], goal_state, param_);
 
     // convert optimal control command to VxVyOmega
     common_type::VxVyOmega optimal_vxvyw_cmd = target_system::convertControlSpace3DToVxVyOmega(u_opt_seq[0]);
@@ -331,10 +354,28 @@ float MPPICore::getCalcTime()
     return calc_time_;
 }
 
+// get state cost of the latest optimal trajectory
+double MPPICore::getStateCost()
+{
+    return state_cost_;
+}
+
 // get controller name
 std::string MPPICore::getControllerName()
 {
     return param_.controller.name;
+}
+
+// check if the vehicle is reached to the goal
+bool MPPICore::isGoalReached()
+{
+    return is_goal_reached_;
+}
+
+// get optimal vehicle command (8DoF)
+common_type::VehicleCommand8D MPPICore::getOptimalVehicleCommand()
+{
+    return target_system::convertControlSpace3DToControlSpace8D(u_opt_latest_, param_);
 }
 
 // return optimal state sequence

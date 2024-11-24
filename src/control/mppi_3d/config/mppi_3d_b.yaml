@@ -15,6 +15,7 @@ calc_time_topic: /mppi/calc_time
 mppi_overlay_text_topic: /mppi/overlay_text
 mppi_optimal_traj_topic: /mppi/optimal_traj
 mppi_sampled_traj_topic: /mppi/sampled_traj
+mppi_eval_msg_topic: /mppi/eval_info
 
 # navigation params
 navigation:

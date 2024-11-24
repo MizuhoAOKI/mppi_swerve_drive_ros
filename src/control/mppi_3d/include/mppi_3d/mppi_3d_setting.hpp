@@ -12,7 +12,7 @@ namespace target_system
 {
 
 // define 3D state space
-using StateSpace3D = common_type::XYYaw; // check definition of XYYaw in mppi_3d.hpp
+using StateSpace3D = common_type::XYYaw; // check definition of XYYaw in common_type.hpp
 static constexpr int DIM_STATE_SPACE = 3;
 //// conversion function from XYYaw to StateSpace3D
 inline common_type::XYYaw convertXYYawToStateSpace3D(const StateSpace3D& state)
@@ -26,7 +26,7 @@ inline StateSpace3D convertStateSpace3DToXYYaw(const common_type::XYYaw& state)
 }
 
 // 3D control input space
-using ControlSpace3D = common_type::VxVyOmega; // check definition of VxVyOmega in mppi_3d.hpp
+using ControlSpace3D = common_type::VxVyOmega; // check definition of VxVyOmega in common_type.hpp
 static constexpr int DIM_CONTROL_SPACE = 3;
 //// conversion function from ControlSpace3D to VxVyOmega
 inline common_type::VxVyOmega convertControlSpace3DToVxVyOmega(const ControlSpace3D& cmd)
@@ -34,28 +34,9 @@ inline common_type::VxVyOmega convertControlSpace3DToVxVyOmega(const ControlSpac
     return cmd; // in mppi_3d, ControlSpace3D is equal to VxVyOmega
 }
 
-// 8D vehicle command space
+// 8DoF vehicle command space
+using ControlSpace8D = common_type::VehicleCommand8D; // check definition of VehicleCommand8D in common_type.hpp
 static constexpr int DIM_VEHICLE_COMMAND_SPACE = 8;
-struct ControlSpace8D
-{
-    int dim = DIM_VEHICLE_COMMAND_SPACE; // dimension
-    double steer_fl; // [rad] front-left steer angle
-    double steer_fr; // [rad] front-right steer angle
-    double steer_rl; // [rad] rear-left steer angle
-    double steer_rr; // [rad] rear-right steer angle
-    double rotor_fl; // [rad/s] front-left rotor speed
-    double rotor_fr; // [rad/s] front-right rotor speed
-    double rotor_rl; // [rad/s] rear-left rotor speed
-    double rotor_rr; // [rad/s] rear-right rotor speed
-
-    // return value as eigen matrix
-    Eigen::Matrix<double, DIM_VEHICLE_COMMAND_SPACE, 1> eigen()
-    {
-        Eigen::Matrix<double, DIM_VEHICLE_COMMAND_SPACE, 1> vector;
-        vector << steer_fl, steer_fr, steer_rl, steer_rr, rotor_fl, rotor_fr, rotor_rl, rotor_rr;
-        return vector;
-    }
-};
 
 //// conversion function from ControlSpace3D to ControlSpace8D
 inline ControlSpace8D convertControlSpace3DToControlSpace8D(const ControlSpace3D& cmd, const param::Param& param)

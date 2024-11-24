@@ -53,7 +53,7 @@ MPPI::MPPI()
 
     //// publishing topic names
     std::string control_cmd_vel_topic, mppi_absvel_topic, mppi_vx_topic, mppi_vy_topic, mppi_omega_topic, \
-    calc_time_topic, mppi_optimal_traj_topic, mppi_sampled_traj_topic, mppi_overlay_text_topic;
+    calc_time_topic, mppi_optimal_traj_topic, mppi_sampled_traj_topic, mppi_overlay_text_topic, mppi_eval_msg_topic;
     private_nh_.param<std::string>("control_cmd_vel_topic", control_cmd_vel_topic, "/cmd_vel");
     private_nh_.param<std::string>("mppi_absvel_topic", mppi_absvel_topic, "/mppi/cmd/absvel");
     private_nh_.param<std::string>("mppi_vx_topic", mppi_vx_topic, "/mppi/cmd/vx");
@@ -63,6 +63,7 @@ MPPI::MPPI()
     private_nh_.param<std::string>("mppi_overlay_text_topic", mppi_overlay_text_topic, "/mppi/overlay_text");
     private_nh_.param<std::string>("mppi_optimal_traj_topic", mppi_optimal_traj_topic, "/mppi/optimal_traj");
     private_nh_.param<std::string>("mppi_sampled_traj_topic", mppi_sampled_traj_topic, "/mppi/sampled_traj");
+    private_nh_.param<std::string>("mppi_eval_msg_topic", mppi_eval_msg_topic, "/mppi/eval_info");
 
     // initialize subscribers
     sub_odom_ = nh_.subscribe(odom_topic, 1, &MPPI::odomCallback, this);
@@ -86,6 +87,7 @@ MPPI::MPPI()
     pub_mppi_overlay_text_ = nh_.advertise<jsk_rviz_plugins::OverlayText>(mppi_overlay_text_topic, 1);
     pub_mppi_optimal_traj_ = nh_.advertise<visualization_msgs::MarkerArray>(mppi_optimal_traj_topic, 1);
     pub_mppi_sampled_traj_ = nh_.advertise<visualization_msgs::MarkerArray>(mppi_sampled_traj_topic, 1);
+    pub_mppi_eval_msg_ = nh_.advertise<mppi_eval_msgs::MPPIEval>(mppi_eval_msg_topic, 1);
 
     // initialize timer
     timer_control_interval_ = private_nh_.createTimer(ros::Duration(param.controller.control_interval), &MPPI::calcControlCommand, this);
@@ -219,6 +221,30 @@ void MPPI::calcControlCommand(const ros::TimerEvent& event)
     pub_cmd_vx_.publish(vx);
     pub_cmd_vy_.publish(vy);
     pub_cmd_omega_.publish(omega);
+
+    // publish mppi evaluation info
+    mppi_eval_msgs::MPPIEval mppi_eval_msg;
+    mppi_eval_msg.header.stamp = ros::Time::now();
+    mppi_eval_msg.header.frame_id = mppi_core_->getControllerName();
+    mppi_eval_msg.state_cost = mppi_core_->getStateCost();
+    mppi_eval_msg.global_x = observed_state_.x;
+    mppi_eval_msg.global_y = observed_state_.y;
+    mppi_eval_msg.global_yaw = observed_state_.yaw;
+    mppi_eval_msg.cmd_vx = optimal_cmd.vx;
+    mppi_eval_msg.cmd_vy = optimal_cmd.vy;
+    mppi_eval_msg.cmd_yawrate = optimal_cmd.omega;
+    common_type::VehicleCommand8D optimal_vehicle_cmd = mppi_core_->getOptimalVehicleCommand();
+    mppi_eval_msg.cmd_steer_fl = optimal_vehicle_cmd.steer_fl;
+    mppi_eval_msg.cmd_steer_fr = optimal_vehicle_cmd.steer_fr;
+    mppi_eval_msg.cmd_steer_rl = optimal_vehicle_cmd.steer_rl;
+    mppi_eval_msg.cmd_steer_rr = optimal_vehicle_cmd.steer_rr;
+    mppi_eval_msg.cmd_rotor_fl = optimal_vehicle_cmd.rotor_fl;
+    mppi_eval_msg.cmd_rotor_fr = optimal_vehicle_cmd.rotor_fr;
+    mppi_eval_msg.cmd_rotor_rl = optimal_vehicle_cmd.rotor_rl;
+    mppi_eval_msg.cmd_rotor_rr = optimal_vehicle_cmd.rotor_rr;
+    mppi_eval_msg.calc_time_ms = mppi_core_->getCalcTime();
+    mppi_eval_msg.goal_reached = mppi_core_->isGoalReached();
+    pub_mppi_eval_msg_.publish(mppi_eval_msg);
 }
 
 // publish rviz markers to visualize optimal trajectory with arrow markers

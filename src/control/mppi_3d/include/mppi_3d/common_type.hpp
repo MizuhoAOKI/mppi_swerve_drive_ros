@@ -103,4 +103,25 @@ namespace common_type
             }
         }
     };
+
+    struct VehicleCommand8D
+    {
+        int dim = 8; // dimension
+        double steer_fl; // [rad] front-left steer angle
+        double steer_fr; // [rad] front-right steer angle
+        double steer_rl; // [rad] rear-left steer angle
+        double steer_rr; // [rad] rear-right steer angle
+        double rotor_fl; // [rad/s] front-left rotor speed
+        double rotor_fr; // [rad/s] front-right rotor speed
+        double rotor_rl; // [rad/s] rear-left rotor speed
+        double rotor_rr; // [rad/s] rear-right rotor speed
+
+        // return value as eigen matrix
+        Eigen::Matrix<double, 8, 1> eigen()
+        {
+            Eigen::Matrix<double, 8, 1> vector;
+            vector << steer_fl, steer_fr, steer_rl, steer_rr, rotor_fl, rotor_fr, rotor_rl, rotor_rr;
+            return vector;
+        }
+    };
 } // namespace controller

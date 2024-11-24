@@ -38,7 +38,10 @@ class MPPICore
         );
         // accessors
         float getCalcTime();
+        double getStateCost();
         std::string getControllerName();
+        bool isGoalReached();
+        common_type::VehicleCommand8D getOptimalVehicleCommand();
         std::vector<common_type::XYYaw> getOptimalTrajectory();
         StateSeqSamples getFullSampledTrajectories();
         StateSeqSamples getEliteSampledTrajectories(int elite_sample_size);
@@ -48,6 +51,8 @@ class MPPICore
         param::Param param_;
         int K, T, XDIM, UDIM;
         float calc_time_; // mppi calculation time [ms]
+        double state_cost_;
+        bool is_goal_reached_;
         Samples costs_;
         RankOfSamples costs_rank_;
         Samples weights_;

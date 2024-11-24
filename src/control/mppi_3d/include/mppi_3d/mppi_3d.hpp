@@ -18,6 +18,7 @@
 #include <jsk_rviz_plugins/OverlayText.h>
 #include "mppi_3d/param.hpp"
 #include "mppi_3d/mppi_3d_core.hpp"
+#include "mppi_eval_msgs/MPPIEval.h"
 
 namespace controller
 {
@@ -40,6 +41,7 @@ namespace controller
             ros::Publisher pub_mppi_optimal_traj_;
             ros::Publisher pub_mppi_sampled_traj_;
             ros::Publisher pub_mppi_overlay_text_;
+            ros::Publisher pub_mppi_eval_msg_;
 
             // subscriber
             //// odometry (global vehicle pose)

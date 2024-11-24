@@ -25,6 +25,7 @@
   <build_depend>grid_map_msgs</build_depend>
   <build_depend>grid_map_rviz_plugin</build_depend>
   <build_depend>grid_map_visualization</build_depend>
+  <build_depend>mppi_eval_msgs</build_depend>
 
   <build_export_depend>geometry_msgs</build_export_depend>
   <build_export_depend>visualization_msgs</build_export_depend>

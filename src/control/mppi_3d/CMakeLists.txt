@@ -23,7 +23,7 @@ find_package(catkin REQUIRED COMPONENTS
   grid_map_msgs
   grid_map_rviz_plugin
   grid_map_visualization
-  # mppi_eval_msgs # TODO: add this package
+  mppi_eval_msgs
 )
 
 # use eigen3 (matrix computation library)

@@ -24,6 +24,7 @@ MPPI-3D local planner for autonomous navigation of a 4wids vehicle.
 | /mppi/overlay_text | std_msgs/String | The overlay text to show mppi name on rviz.|
 | /mppi/optimal_traj | visualization_msgs/MarkerArray | The optimal trajectory for visualization. |
 | /mppi/sampled_traj | visualization_msgs/MarkerArray | The sampled trajectory for visualization. |
+| /mppi/eval_info | mppi_eval_msgs/MPPIEval | The evaluation information of the MPPI controller. |
 
 ## Node Parameters
 | Parameter name               | Type   | Description                                                  |
@@ -70,4 +71,35 @@ For mppi_3d_b node: (config/mppi_3d_b.yaml will be loaded.)
 ```
 source devel/setup.bash
 roslaunch mppi_3d mppi_3d_b.launch
+```
+
+## Note
+
+`rostopic echo /mppi/eval_info` will show you the evaluation information of the MPPI controller in real-time.
+An example output is shown below.
+
+```
+header: 
+  seq: 126
+  stamp: 
+    secs: 13
+    nsecs: 660000000
+  frame_id: "mppi_3d_b"
+state_cost: 1134.80859375
+global_x: 6.007351875305176
+global_y: 2.598604202270508
+global_yaw: 0.27291983366012573
+cmd_vx: 1.464385747909546
+cmd_vy: -0.19296832382678986
+cmd_yawrate: 0.28070420026779175
+cmd_steer_fl: -0.03971844166517258
+cmd_steer_fr: -0.03277630731463432
+cmd_steer_rl: -0.24662145972251892
+cmd_steer_rr: -0.20479810237884521
+cmd_rotor_fl: 6.625393390655518
+cmd_rotor_fr: 8.028000831604004
+cmd_rotor_rl: 6.826725959777832
+cmd_rotor_rr: 8.1949462890625
+calc_time_ms: 3.0
+goal_reached: False
 ```
