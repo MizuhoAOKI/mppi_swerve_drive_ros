@@ -25,7 +25,7 @@ inline StateSpace3D convertStateSpace3DToXYYaw(const common_type::XYYaw& state)
     return state; // in mppi_3d, StateSpace3D is equal to XYYaw
 }
 
-// 3D control input space
+// define 3D control input space
 using ControlSpace3D = common_type::VxVyOmega; // check definition of VxVyOmega in common_type.hpp
 static constexpr int DIM_CONTROL_SPACE = 3;
 //// conversion function from ControlSpace3D to VxVyOmega
@@ -37,7 +37,6 @@ inline common_type::VxVyOmega convertControlSpace3DToVxVyOmega(const ControlSpac
 // 8DoF vehicle command space
 using ControlSpace8D = common_type::VehicleCommand8D; // check definition of VehicleCommand8D in common_type.hpp
 static constexpr int DIM_VEHICLE_COMMAND_SPACE = 8;
-
 //// conversion function from ControlSpace3D to ControlSpace8D
 inline ControlSpace8D convertControlSpace3DToControlSpace8D(const ControlSpace3D& cmd, const param::Param& param)
 {
@@ -54,17 +53,17 @@ inline ControlSpace8D convertControlSpace3DToControlSpace8D(const ControlSpace3D
 }
 
 // define state updating rule
-inline StateSpace3D calcNextState(const StateSpace3D& current_state, const ControlSpace3D& control_input, const double dt)
+inline StateSpace3D calcNextState(const StateSpace3D& current_state, const ControlSpace3D& cmd, const double dt)
 {
     // clamp control input
-    ControlSpace3D clamped_input = control_input;
-    clamped_input.clamp();
+    ControlSpace3D clamped_cmd = cmd;
+    clamped_cmd.clamp();
 
     // calculate next state
     StateSpace3D next_state;
-    next_state.x = current_state.x + clamped_input.vx * std::cos(current_state.yaw) * dt - clamped_input.vy * std::sin(current_state.yaw) * dt;
-    next_state.y = current_state.y + clamped_input.vx * std::sin(current_state.yaw) * dt + clamped_input.vy * std::cos(current_state.yaw) * dt;
-    next_state.yaw = current_state.yaw + clamped_input.omega * dt;
+    next_state.x = current_state.x + clamped_cmd.vx * std::cos(current_state.yaw) * dt - clamped_cmd.vy * std::sin(current_state.yaw) * dt;
+    next_state.y = current_state.y + clamped_cmd.vx * std::sin(current_state.yaw) * dt + clamped_cmd.vy * std::cos(current_state.yaw) * dt;
+    next_state.yaw = current_state.yaw + clamped_cmd.omega * dt;
     next_state.unwrap(); // unwrap yaw angle
 
     // return next state

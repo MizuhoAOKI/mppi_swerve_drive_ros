@@ -59,7 +59,7 @@ class MPPICore
         StateSeq x_opt_seq_;
         StateSeqSamples x_samples_;
         Samples calcWeightsOfSamples(const Samples& costs);
-        common_type::VxVyOmega u_opt_latest_;
+        Control u_opt_latest_;
         ControlSeq u_opt_seq_latest_;
         ControlSeqSamples u_samples_;
         ControlSeqSamples noises_;

@@ -38,11 +38,11 @@ controller:
   prediction_horizon: 30 # [steps]
   step_len_sec: 0.033 # [s]
   param_exploration: 0.1
-  param_lambda: 250.0
+  param_lambda: 200.0
   param_alpha: 0.975
   sigma: [1.00, 1.00, 0.78] # noise for [vx, vy, omega]
   reduce_computation: false # if true, noise sampling is done only once and the same noise is used for all processes.
-  weight_cmd_change: [1.0, 1.0, 1.0] # penalty weight for variation of [vx, vy, omega]
+  weight_cmd_change: [0.0, 0.0, 0.0] # penalty weight for variation of [vx, vy, omega]
   weight_vehicle_cmd_change: [1.4, 1.4, 1.4, 1.4, 0.1, 0.1, 0.1, 0.1] # penalty weight for variation of [fl_steer, fr_steer, rl_steer, rr_steer, fl_vel, fr_vel, rl_vel, rr_vel]
   reference_velocity: 2.0 # [m/s]
   weight_velocity_error: 10.0

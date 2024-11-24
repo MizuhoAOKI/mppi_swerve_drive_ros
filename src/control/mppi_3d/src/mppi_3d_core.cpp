@@ -19,11 +19,11 @@ MPPICore::MPPICore(param::Param& param)
     weights_ = Samples(K, 0.0); // size is (K)
     x_opt_seq_ = StateSeq(T, State()); // size is (T, XDIM)
     x_samples_ = StateSeqSamples(K, StateSeq(T, State())); // size is (K, T, XDIM)
+    u_opt_latest_ = Control(); // size is (UDIM)
     u_opt_seq_latest_ = ControlSeq(T, Control()); // size is (T, UDIM)
     u_samples_ = ControlSeqSamples(K, ControlSeq(T, Control())); // size is (K, T, UDIM)
     noises_ = ControlSeqSamples(K, ControlSeq(T, Control())); // size is (K, T, UDIM)
     sigma_ = ControlSeq(T, Control()); // size is (T, UDIM)
-    u_opt_latest_.setZero(); // size is (Size of VxVyOmega i.e. 3)
 
     // initialize sigma_
     for (int t = 0; t < T; t++)
