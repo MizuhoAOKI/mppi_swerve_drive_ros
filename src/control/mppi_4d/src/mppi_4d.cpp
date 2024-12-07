@@ -252,9 +252,9 @@ void MPPI::publishOptimalTrajectory(const std::vector<common_type::XYYaw>& optim
 {
     // constant params
     //// arrow height
-    double MARKER_POS_Z = 0.5; // [m]
+    double MARKER_POS_Z = 0.41; // [m]
     //// arrow scale (x, y, z)
-    double arrow_scale[3] = {0.225, 0.045, 0.045};
+    double arrow_scale[3] = {0.10, 0.03, 0.03};
     //// arrow color (red, green, blue, alpha)
     double arrow_color[4] = {1.0, 0.0, 0.0, 1.0};
 
@@ -304,7 +304,7 @@ void MPPI::publishSampledTrajectories(const std::vector<std::vector<common_type:
 {
     // constant params
     //// arrow height
-    double MARKER_POS_Z = 0.4; // [m]
+    double MARKER_POS_Z = 0.39; // [m]
     //// line lifetime [s]
     double line_lifetime = 0.1;
     //// arrow scale (x, y, z)
