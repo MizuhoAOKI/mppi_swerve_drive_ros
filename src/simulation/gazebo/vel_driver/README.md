@@ -35,7 +35,7 @@ Gazebo will subscribe the 8DoF vehicle command message and apply it to the 4WIDS
 
 
 ## Usage
-To launch the node indivisually, run the following command.
+To launch the node individually, run the following commands.
 ```
 source devel/setup.bash
 roslaunch vel_driver vel_driver.launch

@@ -151,7 +151,7 @@ namespace planning
 
     void ReferenceCostmapGenerator::publishReferenceYawMap()
     {
-        // generate reference yaw map from the reference path, yaw range is [-pi, pi]
+        // generate reference yaw map from the reference path, yaw range is [0, 2*pi]
         grid_map::GridMap ref_yaw_map_({"ref_yaw"});
         ref_yaw_map_.setFrameId(latest_map_.getFrameId()); // usually "map"
         ref_yaw_map_.setGeometry(latest_map_.getLength(), latest_map_.getResolution() * map_resolution_scale_);

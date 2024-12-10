@@ -32,7 +32,7 @@ This package makes gazebo world and spawn a 4WIDS vehicle.
 
 
 ## Usage
-To launch the gazebo world indivisually, run the following command.
+To launch the gazebo world individually, run the following commands.
 ```
 source devel/setup.bash
 roslaunch world_handler launch_gazebo_world_with_fwids.launch

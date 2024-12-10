@@ -55,7 +55,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIR}
-  # ${OPENMP_INCLUDE_DIR} # added to use clang++18
+  # ${OPENMP_INCLUDE_DIR}
 )
 
 ## Declare a C++ library

@@ -59,7 +59,7 @@ MPPI-4D local planner for autonomous navigation of a 4wids vehicle.
 | /mppi_4d/controller/sg_filter_poly_order | int | The polynomial order of the Savitzky-Golay filter. |
 
 ## Usage
-To launch the node indivisually, run the following command.
+To launch the node individually, run the following commands.
 
 For mppi_4d node: (config/mppi_4d.yaml will be loaded.)
 ```

@@ -30,7 +30,7 @@ MPPI planner receives and uses the reference costmap to evaluate cost of sampled
 
 
 ## Usage
-To launch the node indivisually, run the following command.
+To launch the node individually, run the following commands.
 ```
 source devel/setup.bash
 roslaunch reference_costmap_generator reference_costmap_generator.launch

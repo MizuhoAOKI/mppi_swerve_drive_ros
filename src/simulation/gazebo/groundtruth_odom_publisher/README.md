@@ -25,7 +25,7 @@ This package subscribes /groundtruth_odom topic from the gazebo world and conver
 
 
 # Usage
-To launch the node indivisually, run the following command.
+To launch the node individually, run the following commands.
 ```
 source devel/setup.bash
 roslaunch groundtruth_odom_publisher groundtruth_odom_publisher.launch

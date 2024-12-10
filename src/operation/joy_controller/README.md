@@ -34,7 +34,7 @@ This node receives the joypad input and publishes twist message to operate the v
 
 
 ## Usage
-To launch the node indivisually, run the following command.
+To launch the node individually, run the following commands.
 ```
 source devel/setup.bash
 roslaunch joy_controller joy_controller.launch
