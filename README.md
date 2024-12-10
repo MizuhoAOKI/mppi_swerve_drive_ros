@@ -160,15 +160,9 @@ roslaunch launch/gazebo_world.launch gazebo_world_name:=maze
     source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
     roslaunch launch/navigation.launch local_planner:=mppi_4d
     ```
-
-> [!NOTE]
-> MPPI-H are under preparation. please wait for the update.
-
-<!--
-- ✨Try MPPI-H✨ (good balance between quickness and safety, recommended)
+- [Author's Recommendation] ✨Try MPPI-H✨ (good balance between quickness and safety)
     ```bash
     cd <path to your workspace>/mppi_swerve_drive_ros
     source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
     roslaunch launch/navigation.launch local_planner:=mppi_h
     ```
--->

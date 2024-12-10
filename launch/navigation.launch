@@ -5,7 +5,7 @@
   <!-- often changed arguments -->
   <arg name="gazebo_world_name" default="maze" /> <!-- empty, empty_garden, cylinder_garden, maze -->
   <arg name="joy_operation" default="true" />
-  <arg name="local_planner" default="mppi_3d_b" /> <!-- mppi_3d_a, mppi_3d_b, mppi_4d --> <!-- TODO: mppi_h will come soon. -->
+  <arg name="local_planner" default="mppi_h" /> <!-- mppi_3d_a, mppi_3d_b, mppi_4d, mppi_h -->
 
   <!-- arguments -->
   <arg name="workspace" default="$(env HOME)/mppi_swerve_drive_ros" />
@@ -133,9 +133,9 @@
       <include file="$(find vel_driver)/launch/vel_driver.launch" />
   </group>
 
-  <!-- MPPI-H (switching MPPI-3D and MPPI-4D in real-time) --> <!-- TODO: Coming Soon -->
+  <!-- MPPI-H (switching MPPI-3D and MPPI-4D in real-time) -->
   <group if="$(eval local_planner=='mppi_h')">
-      <include file="$(find hybrid_mppi)/launch/mppi_h.launch" />
+      <include file="$(find mppi_h)/launch/mppi_h.launch" />
 
       <!-- reference_costmap_generator -->
       <include file="$(find reference_costmap_generator)/launch/reference_costmap_generator.launch" />
