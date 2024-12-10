@@ -163,5 +163,7 @@ roslaunch launch/gazebo_world.launch gazebo_world_name:=maze
     roslaunch launch/navigation.launch local_planner:=mppi_h
     ```
 
+https://github.com/user-attachments/assets/eaeb7713-c09f-4a68-b68c-100444438f9e
+
 > [!NOTE]
 > Due to asynchronous simulation on ROS and the sampling-based algorithm relying on multi-threading computation, the controllers' performance can vary depending on a user's environment.
