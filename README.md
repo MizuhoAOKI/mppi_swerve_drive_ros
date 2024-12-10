@@ -128,9 +128,6 @@ source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
 roslaunch launch/gazebo_world.launch gazebo_world_name:=maze
 ```
 
-<details>
-<summary>NOTES</summary>
-
 - `gazebo_world_name` options:
     - `empty`
     - `empty_garden`
@@ -138,7 +135,6 @@ roslaunch launch/gazebo_world.launch gazebo_world_name:=maze
     - `maze`
 - Default joystick path is `/dev/input/js0`. If you want to change the path, please edit `mppi_swerve_drive_ros/src/operation/joy_controller/config/joy.yaml`.
 
-</details>
 
 ### [Case 2] Navigate a 4wids vehicle autonomously with a MPPI controller.
 
@@ -160,9 +156,12 @@ roslaunch launch/gazebo_world.launch gazebo_world_name:=maze
     source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
     roslaunch launch/navigation.launch local_planner:=mppi_4d
     ```
-- [Author's Recommendation] ✨Try MPPI-H✨ (good balance between quickness and safety)
+- [Author's Recommendation] ⭐Try MPPI-H⭐ (good balance between quickness and safety)
     ```bash
     cd <path to your workspace>/mppi_swerve_drive_ros
     source /opt/ros/noetic/setup.bash && source ./devel/setup.bash
     roslaunch launch/navigation.launch local_planner:=mppi_h
     ```
+
+> [!NOTE]
+> Due to asynchronous simulation on ROS and the sampling-based algorithm relying on multi-threading computation, the controllers' performance can vary depending on a user's environment.

@@ -124,4 +124,4 @@ namespace common_type
             return vector;
         }
     };
-} // namespace controller
+} // namespace common_type
