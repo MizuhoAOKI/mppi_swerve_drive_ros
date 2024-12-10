@@ -191,7 +191,7 @@ namespace controller
             // track target velocity (considering only aligned component to the reference path)
             if (ref_yaw_map.isInside(grid_map::Position(state.x, state.y)))
             {
-                double ref_yaw = ref_yaw_map.atPosition("ref_yaw", grid_map::Position(state.x, state.y), grid_map::InterpolationMethods::INTER_LINEAR);
+                double ref_yaw = ref_yaw_map.atPosition("ref_yaw", grid_map::Position(state.x, state.y), grid_map::InterpolationMethods::INTER_NEAREST);
                 double diff_yaw = std::remainder(state.yaw - ref_yaw, 2 * M_PI); // diff_yaw is in [-pi, pi]
                 Eigen::Matrix<double, 2, 1> ref_vel_direction;
                 ref_vel_direction << std::cos(diff_yaw), std::sin(diff_yaw);
@@ -204,7 +204,7 @@ namespace controller
             // try to align with the reference path
             if (ref_yaw_map.isInside(grid_map::Position(state.x, state.y)))
             {
-                double ref_yaw = ref_yaw_map.atPosition("ref_yaw", grid_map::Position(state.x, state.y), grid_map::InterpolationMethods::INTER_LINEAR);
+                double ref_yaw = ref_yaw_map.atPosition("ref_yaw", grid_map::Position(state.x, state.y), grid_map::InterpolationMethods::INTER_NEAREST);
                 double diff_yaw = std::remainder(state.yaw - ref_yaw, 2 * M_PI); // diff_yaw is in [-pi, pi]
                 cost += param.controller.weight_angular_error * diff_yaw * diff_yaw;
             }
