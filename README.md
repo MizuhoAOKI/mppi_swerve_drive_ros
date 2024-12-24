@@ -20,6 +20,15 @@ https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
 
 </div>
 
+## Citation
+If you use this work in an academic context, please cite the following publication:
+```bibtex
+@inproceedings{mizuho2024iros,
+    title={Switching Sampling Space of Model Predictive Path-Integral Controller to Balance Efficiency and Safety in 4WIDS Vehicle Navigation},
+    author={Aoki, Mizuho and Honda, Kohei and Okuda, Hiroyuki and Suzuki, Tatsuya},
+    booktitle={2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
+    year={2024}}
+```
 
 ## Setup
 
