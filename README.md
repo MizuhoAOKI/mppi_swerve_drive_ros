@@ -8,6 +8,7 @@
 [[Website]](https://mizuhoaoki.github.io/projects/iros2024)
 [[PDF]](https://mizuhoaoki.github.io/media/papers/IROS2024_paper_mizuhoaoki.pdf)
 [[Arxiv]](https://arxiv.org/abs/2409.08648)
+[[IEEE Xplore]](https://ieeexplore.ieee.org/document/10802359)
 [[Poster]](https://mizuhoaoki.github.io/projects/iros2024_poster.pdf)
 
 [![ROS Distro: Noetic](https://img.shields.io/badge/ROS-Noetic-red.svg)](https://wiki.ros.org/noetic)
@@ -23,11 +24,15 @@ https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
 ## Citation
 If you use this work in an academic context, please cite the following publication:
 ```bibtex
-@inproceedings{mizuho2024iros,
-    title={Switching Sampling Space of Model Predictive Path-Integral Controller to Balance Efficiency and Safety in 4WIDS Vehicle Navigation},
-    author={Aoki, Mizuho and Honda, Kohei and Okuda, Hiroyuki and Suzuki, Tatsuya},
-    booktitle={2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
-    year={2024}}
+@inproceedings{mizuho2024iros
+  author={Aoki, Mizuho and Honda, Kohei and Okuda, Hiroyuki and Suzuki, Tatsuya},
+  booktitle={2024 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
+  title={Switching Sampling Space of Model Predictive Path-Integral Controller to Balance Efficiency and Safety in 4WIDS Vehicle Navigation}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={3196-3203},
+  doi={10.1109/IROS58592.2024.10802359}}
 ```
 
 ## Setup
