@@ -16,8 +16,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Conference: IROS](https://img.shields.io/badge/Publication-IROS2024-purple.svg)](https://iros2024-abudhabi.org/)
 
-<!-- demo movie -->
-https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c
+<!-- 1-min presentation movie -->
+<!-- https://github.com/user-attachments/assets/0b18bb4d-c6ad-407b-919c-c8c3c219d75c -->
+
+<!-- eyecatch movie -->
+![eyecatch_anim_3drviz](./media/eyecatch_anim_3drviz.gif)
 
 </div>
 
