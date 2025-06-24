@@ -42,7 +42,8 @@ namespace planning
         latest_ref_path_ = *msg;
 
         // publish goal pose marker
-        publishGoalPoseMarker();
+        //// publishGoalPoseArrowMarker(); // publish arrow marker
+        publishGoalPoseSphereMarker(); // publish sphere marker
 
         if (!map_received_ || !ref_path_received_)
         {
@@ -65,7 +66,7 @@ namespace planning
         grid_map::GridMapRosConverter::fromOccupancyGrid(*msg, "map", latest_map_);
     }
 
-    void ReferenceCostmapGenerator::publishGoalPoseMarker()
+    void ReferenceCostmapGenerator::publishGoalPoseArrowMarker()
     {
         // constant params
         //// arrow height
@@ -94,6 +95,37 @@ namespace planning
         goal_pose_marker.color.g = arrow_color[1];
         goal_pose_marker.color.b = arrow_color[2];
         goal_pose_marker.color.a = arrow_color[3];
+        pub_goal_pose_marker_.publish(goal_pose_marker);
+    }
+
+    void ReferenceCostmapGenerator::publishGoalPoseSphereMarker()
+    {
+        // constant params
+        double MARKER_POS_Z = 0.5; // [m]
+        //// sphere scale in radius
+        double sphere_scale = 0.5; // [m]
+        //// arrow color (red, green, blue, alpha)
+        double sphere_color[4] = {0.0, 0.0, 1.0, 1.0};
+
+        // publish goal pose marker
+        visualization_msgs::Marker goal_pose_marker;
+        goal_pose_marker.header.frame_id = "map";
+        goal_pose_marker.header.stamp = ros::Time::now();
+        goal_pose_marker.ns = "goal_pose";
+        goal_pose_marker.id = 0;
+        goal_pose_marker.type = visualization_msgs::Marker::SPHERE;
+        goal_pose_marker.action = visualization_msgs::Marker::ADD;
+        goal_pose_marker.pose.position.x = latest_ref_path_.poses.back().pose.position.x;
+        goal_pose_marker.pose.position.y = latest_ref_path_.poses.back().pose.position.y;
+        goal_pose_marker.pose.position.z = MARKER_POS_Z;
+        goal_pose_marker.pose.orientation = latest_ref_path_.poses.back().pose.orientation; // optional for sphere
+        goal_pose_marker.scale.x = sphere_scale;
+        goal_pose_marker.scale.y = sphere_scale;
+        goal_pose_marker.scale.z = sphere_scale;
+        goal_pose_marker.color.r = sphere_color[0];
+        goal_pose_marker.color.g = sphere_color[1];
+        goal_pose_marker.color.b = sphere_color[2];
+        goal_pose_marker.color.a = sphere_color[3];
         pub_goal_pose_marker_.publish(goal_pose_marker);
     }
 

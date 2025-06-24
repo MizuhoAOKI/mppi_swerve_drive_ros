@@ -4,10 +4,11 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /LaserScan1
         - /Local Cost Map1/Position1
         - /Local Cost Map1/Orientation1
         - /Global Cost Map1/Position1
-        - /Controller Name1
+        - /Vehicle Trajectory1
       Splitter Ratio: 0.5661971569061279
     Tree Height: 1147
   - Class: rviz/Selection
@@ -39,7 +40,7 @@ Visualization Manager:
       Cell Size: 1
       Class: rviz/Grid
       Color: 160; 160; 164
-      Enabled: true
+      Enabled: false
       Line Style:
         Line Width: 0.029999999329447746
         Value: Lines
@@ -52,7 +53,7 @@ Visualization Manager:
       Plane: XY
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
-      Value: true
+      Value: false
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
@@ -201,7 +202,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.029999999329447746
+      Size (m): 0.07999999821186066
       Style: Flat Squares
       Topic: /laser_link/scan
       Unreliable: false
@@ -248,39 +249,39 @@ Visualization Manager:
       Marker Topic: /goal_pose_marker
       Name: Goal Pose
       Namespaces:
-        goal_pose: true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: map
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: Map
       Topic: /map
       Unreliable: false
       Use Timestamp: false
-      Value: true
+      Value: false
     - Alpha: 0.4000000059604645
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: Local Cost Map
       Topic: /move_base/local_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: true
+      Value: false
     - Alpha: 0.30000001192092896
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: Global Cost Map
       Topic: /move_base/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
-      Value: true
+      Value: false
     - Alpha: 0.5
       Autocompute Intensity Bounds: true
       Class: grid_map_rviz_plugin/GridMap
@@ -375,7 +376,7 @@ Visualization Manager:
       Enabled: true
       Name: Vehicle Trajectory
       Value: true
-      color: 130; 130; 130
+      color: 200; 200; 200
       duration: 10
       frame: base_link
       line_width: 0.05000000074505806
@@ -429,7 +430,7 @@ Visualization Manager:
       Marker Topic: /mppi/optimal_traj
       Name: MPPI Optimal Traj
       Namespaces:
-        optimal_trajectory: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -437,7 +438,7 @@ Visualization Manager:
       Marker Topic: /mppi/sampled_traj
       Name: MPPI Sampled Traj
       Namespaces:
-        sampled_trajectories: true
+        {}
       Queue Size: 100
       Value: true
     - Buffer length: 100
@@ -449,6 +450,7 @@ Visualization Manager:
       Value: true
       auto color change: false
       auto scale: true
+      auto text size in plot: true
       background color: 0; 0; 0
       backround alpha: 0
       border: true
@@ -462,6 +464,7 @@ Visualization Manager:
       min value: -1
       show caption: true
       text size: 12
+      text size in plot: 12
       top: 10
       update interval: 0.03999999910593033
       width: 100
@@ -497,6 +500,7 @@ Visualization Manager:
       Value: true
       auto color change: false
       auto scale: true
+      auto text size in plot: true
       background color: 0; 0; 0
       backround alpha: 0
       border: true
@@ -510,6 +514,7 @@ Visualization Manager:
       min value: -1
       show caption: true
       text size: 12
+      text size in plot: 12
       top: 10
       update interval: 0.03999999910593033
       width: 100
@@ -534,6 +539,15 @@ Visualization Manager:
       text size: 12
       top: 0
       width: 128
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /rviz_3dmap
+      Name: 3D Map
+      Namespaces:
+        maze_floor: true
+        maze_walls: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -563,7 +577,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 22.333580017089844
+      Distance: 18.234743118286133
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -571,17 +585,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.23792316019535065
-        Y: -0.21725495159626007
-        Z: 1.2412116527557373
+        X: -0.24591557681560516
+        Y: 0.2723242938518524
+        Z: -0.8783605098724365
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 0.999796986579895
       Target Frame: <Fixed Frame>
-      Yaw: 3.1399943828582764
+      Yaw: 2.2749907970428467
     Saved: ~
 Window Geometry:
   Displays:

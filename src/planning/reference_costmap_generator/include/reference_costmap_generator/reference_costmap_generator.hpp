@@ -24,7 +24,8 @@ namespace planning
             // publisher
             //// goal pose marker
             ros::Publisher pub_goal_pose_marker_;
-            void publishGoalPoseMarker();
+            void publishGoalPoseArrowMarker();
+            void publishGoalPoseSphereMarker();
 
             //// distance error map
             ros::Publisher pub_distance_error_map_;

@@ -39,6 +39,11 @@
   <!-- map server -->
   <node pkg="map_server" type="map_server" name="map_server" args="$(arg workspace)/data/map/$(arg gazebo_world_name)/map.yaml" />
 
+  <!-- 3d map visualizer -->
+  <include file="$(find map_visualizer)/launch/map_visualizer.launch">
+    <arg name="map_name" value="$(arg gazebo_world_name)" />
+  </include>
+
   <!-- amcl -->
   <node pkg="amcl" type="amcl" name="amcl">
       <param name="initial_pose_x"            value="$(arg initial_pose_x)"/>
